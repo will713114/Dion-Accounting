@@ -1,183 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#7257d5">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#7557d9">
 <title>Dion</title>
-
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#f6f5fa;
- color:#262333;
-}
-.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:90px}
-header{
- background:linear-gradient(135deg,#7257d5,#9b7de5);
- color:white;
- padding:32px 22px 25px;
- border-radius:0 0 28px 28px;
-}
-.brand{font-size:28px;font-weight:800}
-.subtitle{opacity:.85;margin-top:5px;font-size:13px}
-
-.balance{
- margin-top:25px;
- background:rgba(255,255,255,.16);
- padding:18px;
- border-radius:20px;
-}
-.balance small{opacity:.85}
-.balance h1{margin:6px 0 0;font-size:32px}
-
-.stats{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
- margin-top:13px;
-}
-.stat{
- background:rgba(255,255,255,.14);
- padding:12px;
- border-radius:15px;
- font-size:12px;
-}
-.stat strong{display:block;font-size:17px;margin-top:4px}
-
-main{padding:20px}
-.actions{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
-}
-button{
- border:0;
- border-radius:15px;
- padding:14px;
- font-size:15px;
- font-weight:700;
- cursor:pointer;
-}
-.incomeBtn{background:#e5f7ed;color:#16834b}
-.expenseBtn{background:#fde9ed;color:#c23e55}
-
-.sectionTitle{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin:25px 0 12px;
- font-weight:800;
-}
-select,input{
- width:100%;
- padding:13px;
- border:1px solid #ddd8e7;
- border-radius:12px;
- background:white;
- font-size:15px;
-}
-.month{width:auto;padding:8px}
-
-.empty{
- text-align:center;
- color:#999;
- padding:35px 10px;
-}
-.tx{
- background:white;
- border-radius:16px;
- padding:14px;
- margin-bottom:10px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- box-shadow:0 3px 12px rgba(0,0,0,.04);
-}
-.txTitle{font-weight:700}
-.txMeta{font-size:12px;color:#8b8795;margin-top:5px}
-.amount{font-weight:800;text-align:right}
-.plus{color:#16834b}
-.minus{color:#c23e55}
-.smallBtns{margin-top:7px;text-align:right}
-.smallBtns button{
- padding:4px 7px;
- font-size:11px;
- background:#f1eff5;
- margin-left:3px;
-}
-
-.modal{
- position:fixed;
- inset:0;
- background:rgba(20,15,30,.45);
- display:none;
- align-items:flex-end;
- justify-content:center;
- z-index:20;
-}
-.modal.show{display:flex}
-.sheet{
- background:white;
- width:100%;
- max-width:520px;
- border-radius:25px 25px 0 0;
- padding:22px;
- max-height:90vh;
- overflow:auto;
-}
-.sheet h2{margin-top:0}
-label{
- display:block;
- font-size:12px;
- color:#777;
- margin:13px 0 6px;
- font-weight:700;
-}
-.save{
- width:100%;
- background:#7257d5;
- color:white;
- margin-top:18px;
-}
-.cancel{
- width:100%;
- background:#eeeaf5;
- margin-top:8px;
-}
-footer{
- text-align:center;
- color:#aaa;
- font-size:11px;
- margin-top:30px;
-}
+*{box-sizing:border-box}body{margin:0;background:#f7f6fa;font-family:Arial;color:#292534}
+header{background:linear-gradient(135deg,#7557d9,#9d7ce8);color:#fff;padding:30px 22px;border-radius:0 0 28px 28px}
+h1{margin:0;font-size:34px}.sub{opacity:.85}.card{background:#ffffff25;padding:18px;margin-top:22px;border-radius:20px}
+.big{font-size:32px;font-weight:bold;margin:6px 0}.stats{display:flex;gap:10px}.stats div{flex:1;background:#ffffff20;padding:12px;border-radius:14px}
+main{padding:20px;max-width:550px;margin:auto}.buttons{display:flex;gap:12px}.buttons button{flex:1}
+button,input,select{padding:13px;border:0;border-radius:12px;font-size:15px}
+button{font-weight:bold}.inc{background:#e4f7ec;color:#187d4b}.exp{background:#fde8ec;color:#bd4056}
+.title{display:flex;justify-content:space-between;align-items:center;margin:24px 0 12px}.title input{width:145px}
+.item{background:white;padding:14px;margin:9px 0;border-radius:15px;display:flex;justify-content:space-between}
+.meta{font-size:12px;color:#888;margin-top:4px}.amt{font-weight:bold}.green{color:#16804b}.red{color:#c23e55}
+.mini{padding:4px 7px;font-size:11px;margin:6px 0 0 3px}.empty{text-align:center;color:#999;padding:30px}
+#modal{display:none;position:fixed;inset:0;background:#0006;align-items:flex-end}
+.sheet{background:white;width:100%;max-width:550px;margin:auto;padding:22px;border-radius:24px 24px 0 0}
+.sheet input,.sheet select{width:100%;border:1px solid #ddd;margin:5px 0 10px}.save{width:100%;background:#7557d9;color:white}.cancel{width:100%;margin-top:7px}
 </style>
 </head>
-
 <body>
-<div class="app">
+
 <header>
- <div class="brand">Dion</div>
- <div class="subtitle">Personal Money Tracker</div>
-
- <div class="balance">
-  <small>Total Balance</small>
-  <h1 id="balance">RM 0.00</h1>
-
-  <div class="stats">
-   <div class="stat">Income<strong id="income">RM 0.00</strong></div>
-   <div class="stat">Expenses<strong id="expense">RM 0.00</strong></div>
-  </div>
- </div>
+<h1>Dion</h1>
+<div class="sub">Personal Money Tracker</div>
+<div class="card">
+<div>Total Balance</div><div class="big" id="bal">RM 0.00</div>
+<div class="stats">
+<div>Income<br><b id="inc">RM 0.00</b></div>
+<div>Expenses<br><b id="exp">RM 0.00</b></div>
+</div>
+</div>
 </header>
 
 <main>
- <div class="actions">
-  <button class="incomeBtn" onclick="openForm('Income')">＋ Add Income</button>
-  <button class="expenseBtn" onclick="openForm('Expense')">− Add Expense</button>
- </div>
+<div class="buttons">
+<button class="inc" onclick="openF('Income')">+ Add Income</button>
+<button class="exp" onclick="openF('Expense')">− Add Expense</button>
+</div>
 
- <div class="sectionTitle">
-  <
+<div class="title">
+<b>Transactions</b>
+<input type="month" id="month" onchange="show()">
+</div>
+<div id="list"></div>
+</main>
+
+<div id="modal">
+<div class="sheet">
+<h2 id="ft">Add Expense</h2>
+<input type="number" id="amount" placeholder="Amount (RM)" step=".01">
+<select id="cat"></select>
+<input id="note" placeholder="Description">
+<input type="date" id="date">
+<button class="save" onclick="save()">Save Transaction</button>
+<button class="cancel" onclick="closeF()">Cancel</button>
+</div>
+</div>
+
+<script>
+let T=JSON.parse(localStorage.dion||"[]"),type="Expense",eid=null;
+const E=["Food","Shopping","Transport","Bills","Home","Travel","Entertainment","Freelance","House Loan","Car Loan","Insurance","Others"];
+const I=["Salary","Freelance Income","Bonus","Other Income"];
+const $=x=>document.getElementById(x);
+const rm=x=>"RM "+Number(x).toLocaleString("en-MY",{minimumFractionDigits:2,maximumFractionDigits:2});
+const today=()=>new Date().toISOString().slice(0,10);
+$("month").value=today().slice(0,7);
+
+function openF(t,o){
+ type=t;eid=o?o.id:null;$("ft").innerText=(o?"Edit ":"Add ")+t;
+ $("cat").innerHTML=(t=="Expense"?E:I).map(x=>`<option>${x}</option>`).join("");
+ $("amount").value=o?o.amount:"";$("note").value=o?o.note:"";
+ $("date").value=o?o.date:today();if(o)$("cat").value=o.cat;
+ $("modal").style.display="flex"
+}
+function closeF(){$("modal").style.display="none";eid=null}
+function save(){
+ let a=+$("amount").value;if(a<=0)return alert("Please enter an amount.");
+ let o={id:eid||Date.now(),type,amount:a,cat:$("cat").value,note:$("note").value,date:$("date").value};
+ T=eid?T.map(x=>x.id==eid?o:x):[...T,o];localStorage.dion=JSON.stringify(T);closeF();show()
+}
+function del(id){if(confirm("Delete this transaction?")){T=T.filter(x=>x.id!=id);localStorage.dion=JSON.stringify(T);show()}}
+function edit(id){let o=T.find(x=>x.id==id);openF(o.type,o)}
+function show(){
+ let m=$("month").value,F=T.filter(x=>x.date.startsWith(m)).sort((a,b)=>b.date.localeCompare(a.date)),i=0,e=0;
+ F.forEach(x=>x.type=="Income"?i+=x.amount:e+=x.amount);
+ $("inc").innerText=rm(i);$("exp").innerText=rm(e);$("bal").innerText=rm(i-e);
+ $("list").innerHTML=F.length?F.map(x=>`<div class="item"><div><b>${x.cat}</b><div class="meta">${x.date}${x.note?" • "+x.note:""}</div></div><div><div class="amt ${x.type=="Income"?"green":"red"}">${x.type=="Income"?"+":"−"} ${rm(x.amount)}</div><button class="mini" onclick="edit(${x.id})">Edit</button><button class="mini" onclick="del(${x.id})">Delete</button></div></div>`).join(""):`<div class="empty">No transactions yet.</div>`
+}
+show();
+</script>
+</body>
+</html>
