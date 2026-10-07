@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#7257d5">
+<title>Dion</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#f6f5fa;
+ color:#262333;
+}
+.app{max-width:520px;margin:auto;min-height:100vh;padding-bottom:90px}
+header{
+ background:linear-gradient(135deg,#7257d5,#9b7de5);
+ color:white;
+ padding:32px 22px 25px;
+ border-radius:0 0 28px 28px;
+}
+.brand{font-size:28px;font-weight:800}
+.subtitle{opacity:.85;margin-top:5px;font-size:13px}
+
+.balance{
+ margin-top:25px;
+ background:rgba(255,255,255,.16);
+ padding:18px;
+ border-radius:20px;
+}
+.balance small{opacity:.85}
+.balance h1{margin:6px 0 0;font-size:32px}
+
+.stats{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+ margin-top:13px;
+}
+.stat{
+ background:rgba(255,255,255,.14);
+ padding:12px;
+ border-radius:15px;
+ font-size:12px;
+}
+.stat strong{display:block;font-size:17px;margin-top:4px}
+
+main{padding:20px}
+.actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+button{
+ border:0;
+ border-radius:15px;
+ padding:14px;
+ font-size:15px;
+ font-weight:700;
+ cursor:pointer;
+}
+.incomeBtn{background:#e5f7ed;color:#16834b}
+.expenseBtn{background:#fde9ed;color:#c23e55}
+
+.sectionTitle{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin:25px 0 12px;
+ font-weight:800;
+}
+select,input{
+ width:100%;
+ padding:13px;
+ border:1px solid #ddd8e7;
+ border-radius:12px;
+ background:white;
+ font-size:15px;
+}
+.month{width:auto;padding:8px}
+
+.empty{
+ text-align:center;
+ color:#999;
+ padding:35px 10px;
+}
+.tx{
+ background:white;
+ border-radius:16px;
+ padding:14px;
+ margin-bottom:10px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ box-shadow:0 3px 12px rgba(0,0,0,.04);
+}
+.txTitle{font-weight:700}
+.txMeta{font-size:12px;color:#8b8795;margin-top:5px}
+.amount{font-weight:800;text-align:right}
+.plus{color:#16834b}
+.minus{color:#c23e55}
+.smallBtns{margin-top:7px;text-align:right}
+.smallBtns button{
+ padding:4px 7px;
+ font-size:11px;
+ background:#f1eff5;
+ margin-left:3px;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ background:rgba(20,15,30,.45);
+ display:none;
+ align-items:flex-end;
+ justify-content:center;
+ z-index:20;
+}
+.modal.show{display:flex}
+.sheet{
+ background:white;
+ width:100%;
+ max-width:520px;
+ border-radius:25px 25px 0 0;
+ padding:22px;
+ max-height:90vh;
+ overflow:auto;
+}
+.sheet h2{margin-top:0}
+label{
+ display:block;
+ font-size:12px;
+ color:#777;
+ margin:13px 0 6px;
+ font-weight:700;
+}
+.save{
+ width:100%;
+ background:#7257d5;
+ color:white;
+ margin-top:18px;
+}
+.cancel{
+ width:100%;
+ background:#eeeaf5;
+ margin-top:8px;
+}
+footer{
+ text-align:center;
+ color:#aaa;
+ font-size:11px;
+ margin-top:30px;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+<header>
+ <div class="brand">Dion</div>
+ <div class="subtitle">Personal Money Tracker</div>
+
+ <div class="balance">
+  <small>Total Balance</small>
+  <h1 id="balance">RM 0.00</h1>
+
+  <div class="stats">
+   <div class="stat">Income<strong id="income">RM 0.00</strong></div>
+   <div class="stat">Expenses<strong id="expense">RM 0.00</strong></div>
+  </div>
+ </div>
+</header>
+
+<main>
+ <div class="actions">
+  <button class="incomeBtn" onclick="openForm('Income')">＋ Add Income</button>
+  <button class="expenseBtn" onclick="openForm('Expense')">− Add Expense</button>
+ </div>
+
+ <div class="sectionTitle">
+  <
